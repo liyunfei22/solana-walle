@@ -3,7 +3,23 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router'
 import './index.css'
 import { App } from './app.tsx'
+import { 
+  createDefaultAuthorizationCache, 
+  createDefaultChainSelector, 
+  createDefaultWalletNotFoundHandler,
+  registerMwa, 
+} from '@solana-mobile/wallet-standard-mobile';
 
+registerMwa({
+  appIdentity: {
+    name: 'My app',
+    uri: 'https://solana-walle.vercel.app',
+  },    
+  authorizationCache: createDefaultAuthorizationCache(),
+  chains: ['solana:devnet', 'solana:mainnet'],
+  chainSelector: createDefaultChainSelector(),
+  onWalletNotFound: createDefaultWalletNotFoundHandler()
+})
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
